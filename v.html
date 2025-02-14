@@ -27,22 +27,37 @@
             overflow: hidden;
         }
 
-        .valentine-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #ff4d4d, #ff8080, #ff4d4d);
+        .rose-button {
+            font-size: 5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin: 20px;
         }
 
-        .valentine-card h1 {
-            font-size: 2.8rem;
-            background: linear-gradient(45deg, #ff1a1a, #ff4d4d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 25px;
+        .rose-button:hover {
+            transform: scale(1.1);
+        }
+
+        .hidden-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .show-content {
+            opacity: 1;
+            transform: translateY(0);
+            height: auto;
+        }
+
+        .prompt-text {
+            color: #ff4d4d;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .name {
@@ -52,34 +67,19 @@
             font-family: 'Brush Script MT', cursive;
         }
 
-        .valentine-card p {
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, #ff1a1a, #ff4d4d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 25px;
+        }
+
+        p {
             font-size: 1.3rem;
             color: #444;
             line-height: 1.6;
             margin-bottom: 35px;
-        }
-
-        .flowers {
-            font-size: 3.5rem;
-            margin-bottom: 25px;
-        }
-
-        .flowers span {
-            display: inline-block;
-            margin: 0 8px;
-            animation: float 3s infinite ease-in-out;
-            transform-origin: center;
-        }
-
-        .flowers span:nth-child(1) { animation-delay: 0s; }
-        .flowers span:nth-child(2) { animation-delay: 0.4s; }
-        .flowers span:nth-child(3) { animation-delay: 0.8s; }
-        .flowers span:nth-child(4) { animation-delay: 1.2s; }
-        .flowers span:nth-child(5) { animation-delay: 1.6s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
         }
 
         .signature {
@@ -89,32 +89,38 @@
             font-style: italic;
         }
 
-        .hearts {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
-        @keyframes heartFloat {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        .heart-beat {
+            animation: heartBeat 0.5s ease;
         }
     </style>
 </head>
 <body>
     <div class="valentine-card">
-        <div class="flowers">
-            <span>🌹</span>
-            <span>💝</span>
-            <span>🌹</span>
-            <span>💝</span>
-            <span>🌹</span>
+        <div class="prompt-text">Tap the rose to reveal a special message</div>
+        <button class="rose-button" onclick="revealMessage()">🌹</button>
+        <div class="hidden-content" id="valentineContent">
+            <h1>Happy Valentine's Day</h1>
+            <div class="name">Dearest Bonnie</div>
+            <p>Your smile brightens my days more than all the stars in the night sky. On this special day, I want you to know how much joy you bring to my life. You're not just my valentine - you're my favorite person in the whole world. 💖</p>
+            <div class="signature">Forever Yours,<br>With All My Love</div>
         </div>
-        <h1>Happy Valentine's Day</h1>
-        <div class="name">Dearest Bonnie</div>
-        <p>Your smile brightens my days more than all the stars in the night sky. On this special day, I want you to know how much joy you bring to my life. You're not just my valentine - you're my favorite person in the whole world. 💖</p>
-        <div class="signature">Forever Yours,<br>With All My Love, <br> from you know who </div>
     </div>
+
+    <script>
+        function revealMessage() {
+            document.getElementById('valentineContent').classList.add('show-content');
+            const rose = document.querySelector('.rose-button');
+            rose.classList.add('heart-beat');
+            rose.style.cursor = 'default';
+            document.querySelector('.prompt-text').style.display = 'none';
+            rose.disabled = true;
+        }
+    </script>
 </body>
 </html>
